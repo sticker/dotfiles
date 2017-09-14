@@ -28,3 +28,12 @@ autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 map <C-n> :NERDTreeToggle<CR>
 '''
+
+[[plugins]] # ステータスライン強化
+repo = 'itchyny/lightline.vim'
+
+[[plugins]] # 末尾の全角と半角の空白文字を赤くハイライト
+repo = 'bronson/vim-trailing-whitespace'
+
+[[plugins]] # インデントの可視化
+repo = 'Yggdroot/indentLine'
