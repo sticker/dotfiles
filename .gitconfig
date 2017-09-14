@@ -1,0 +1,41 @@
+[core]
+    pager = less -q -R
+    excludesfile = ~/.gitignore
+    preloadindex = true
+
+[user]
+    name  = "星野 徹也"
+    email = hoshino.tetsuya@nifty.co.jp
+
+[github]
+    user = sticker
+
+[color]
+    ui = auto
+
+[color "diff"]
+    # http://qiita.com/qurage/items/452f2debb64e2708a46c
+    meta = 242 238
+    frag = 239 236
+    old = 167 normal
+    new = 030 normal
+    context = 240
+    commit = 246 024
+
+[alias]
+    alias = !git config --get-regexp '^alias\\.' | sed 's/alias\\.\\([^ ]*\\) \\(.*\\)/\\1\\\t => \\2/' | sort
+    st = status
+    ss = status -s
+    sh = show
+    co = checkout
+    bl = blame
+    difff = diff --name-only
+    diffs = diff --cached
+    lg = log --pretty='format:%C(yellow)%h%Creset %C(magenta)%cd%Creset %s %C(green bold)<%an>%Creset%C(red bold)%d%Creset %C(blue)%ar%Creset' --date=iso
+    lgg = log --graph --pretty='format:%C(yellow)%h%Creset %C(magenta)%cd%Creset %s %C(green bold)<%an>%Creset%C(red bold)%d%Creset %C(blue)%ar%Creset' --date=iso
+    lga = !"git lg --all"
+    lgga = !"git lgg --all"
+    unstage = reset HEAD
+
+[help]
+    autocorrect = 1
