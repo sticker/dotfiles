@@ -28,9 +28,8 @@ if [ ! -d ~/.anyenv ]; then
     git clone https://github.com/riywo/anyenv ~/.anyenv
     . ~/.bash_profile
     anyenv install rbenv
-    anyenv install pyenv
+    #anyenv install pyenv
     anyenv install ndenv
-    git clone https://github.com/yyuu/pyenv-virtualenv.git ~/.anyenv/envs/pyenv/plugins/pyenv-virtualenv
     . ~/.bash_profile
 fi
 
@@ -50,10 +49,8 @@ shift $((OPTIND - 1))
 
 if [ -n "$RUBY" ]; then
     yum -y install openssl-devel readline-devel zlib-devel libcurl-devel bzip2
-    
     rpm -ivh http://www.city-fan.org/ftp/contrib/yum-repo/city-fan.org-release-1-13.rhel6.noarch.rpm
     yum -y update --enablerepo=city-fan.org libcurl
-    
     VERSION=$(rbenv install --list | grep 2 | grep -v r | grep -v mag | grep -v dev | tail -1)
     rbenv install $VERSION
     rbenv global $VERSION
@@ -61,11 +58,14 @@ fi
 
 
 if [ -n "$PYTHON" ]; then
-    yum -y install zlib-devel bzip2 bzip2-devel readline-devel sqlite-devel openssl-devel
-
-    VERSION=$(pyenv install --list | grep anaconda3 | tail -1)
-    pyenv install $VERSION
-    pyenv virtualenv $VERSION anaconda3
+    wget http://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda.sh
+    bash ~/miniconda.sh -b -p $HOME/miniconda
+    export PATH="$HOME/miniconda/bin:$PATH"
+    echo 'export PATH="$HOME/miniconda/bin:$PATH"' >> ~/.bash_profile
+    #conda env create --file myenv.yaml
+    conda create -n myenv python=3.6 numpy pandas scipy scikit-learn matplotlib seaborn jupyter django Sphinx -y
+    source activate myenv
+    pip install nbsphinx sphinx-quickstart-plus sphinxcontrib-actdiag sphinxcontrib-blockdiag sphinxcontrib-nwdiag sphinxcontrib-seqdiag sphinx-fontawesome sphinx-autobuild CommonMark recommonmark==0.4.0 sphinx-rtd-theme sphinxcontrib-plantuml
 fi
 
 if [ -n "$NODE" ]; then
