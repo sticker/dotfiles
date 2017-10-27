@@ -1,7 +1,7 @@
 #!/bin/bash
 
 yum -y install epel-release
-yum -y install man wget which dos2unix screen bind-utils hdparm lsof jwhois nkf expect net-tools nc telnet tar
+yum -y install man wget which dos2unix screen bind-utils hdparm lsof jwhois nkf expect net-tools nc telnet tar bash-completion
 yum -y update nss
 yum -y remove git
 curl -s https://setup.ius.io/ | bash
