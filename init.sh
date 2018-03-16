@@ -28,7 +28,7 @@ if [ ! -d ~/.anyenv ]; then
     git clone https://github.com/riywo/anyenv ~/.anyenv
     . ~/.bash_profile
     anyenv install rbenv
-    #anyenv install pyenv
+    anyenv install pyenv
     anyenv install ndenv
     . ~/.bash_profile
 fi
@@ -58,14 +58,9 @@ fi
 
 
 if [ -n "$PYTHON" ]; then
-    wget http://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda.sh
-    bash ~/miniconda.sh -b -p $HOME/miniconda
-    export PATH="$HOME/miniconda/bin:$PATH"
-    echo 'export PATH="$HOME/miniconda/bin:$PATH"' >> ~/.bash_profile
-    #conda env create --file myenv.yaml
-    conda create -n myenv python=3.6 numpy pandas scipy scikit-learn matplotlib seaborn jupyter django Sphinx -y
-    source activate myenv
-    pip install nbsphinx sphinx-quickstart-plus sphinxcontrib-actdiag sphinxcontrib-blockdiag sphinxcontrib-nwdiag sphinxcontrib-seqdiag sphinx-fontawesome sphinx-autobuild CommonMark recommonmark==0.4.0 sphinx-rtd-theme sphinxcontrib-plantuml
+    yum -y install zlib-devel bzip2 bzip2-devel readline-devel sqlite-devel openssl-devel
+    VERSION=$(pyenv install --list | grep '  3.6' | tail -1)
+    pyenv install $VERSION
 fi
 
 if [ -n "$NODE" ]; then

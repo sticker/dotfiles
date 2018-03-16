@@ -21,4 +21,4 @@ unset NO_PROXY
 export PATH="$HOME/.anyenv/bin:$PATH"
 eval "$(anyenv init -)"
 
-export PATH="$HOME/miniconda/bin:$PATH"
+#export PATH="$HOME/miniconda/bin:$PATH"
