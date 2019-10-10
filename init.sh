@@ -9,28 +9,18 @@ yum -y install git2u
 yum -y groupinstall "Development Tools" --exclude=git
 
 if [ ! -d ~/neovim ]; then
-    yum -y install libtool automake cmake gcc gcc-c++ make pkgconfig unzip
-    cd /usr/local/src
-    curl -L -O http://ftp.gnu.org/gnu/autoconf/autoconf-2.69.tar.gz
-    tar zxf autoconf-2.69.tar.gz
-    cd autoconf-2.69
-    yum install -y openssl-devel
-    ./configure
-    make && make install
-    cd
-    git clone https://github.com/neovim/neovim
-    cd neovim/
-    make
-    make install
+    yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+    yum install -y neovim python3-neovim python2-neovim
 fi
 
 if [ ! -d ~/.anyenv ]; then
-    git clone https://github.com/riywo/anyenv ~/.anyenv
-    . ~/.bash_profile
+    git clone https://github.com/anyenv/anyenv ~/.anyenv
+    source ~/.bash_profile
+    yes | anyenv install --init
     anyenv install rbenv
     anyenv install pyenv
-    anyenv install ndenv
-    . ~/.bash_profile
+    anyenv install nodenv
+    source ~/.bash_profile
 fi
 
 while getopts rpn OPT
@@ -49,8 +39,6 @@ shift $((OPTIND - 1))
 
 if [ -n "$RUBY" ]; then
     yum -y install openssl-devel readline-devel zlib-devel libcurl-devel bzip2
-    rpm -ivh http://www.city-fan.org/ftp/contrib/yum-repo/city-fan.org-release-1-13.rhel6.noarch.rpm
-    yum -y update --enablerepo=city-fan.org libcurl
     VERSION=$(rbenv install --list | grep 2 | grep -v r | grep -v mag | grep -v dev | tail -1)
     rbenv install $VERSION
     rbenv global $VERSION
@@ -58,12 +46,12 @@ fi
 
 
 if [ -n "$PYTHON" ]; then
-    yum -y install zlib-devel bzip2 bzip2-devel readline-devel sqlite-devel openssl-devel
-    VERSION=$(pyenv install --list | grep '  3.6' | tail -1)
+    yum -y install zlib-devel bzip2 bzip2-devel readline-devel sqlite-devel openssl-devel libffi-devel
+    VERSION=$(pyenv install --list | egrep '  3.7..$' | tail -1)
     pyenv install $VERSION
 fi
 
 if [ -n "$NODE" ]; then
-    VERSION=$(ndenv install --list | grep v8 | tail -1)
-    ndenv install $VERSION
+    VERSION=$(nodenv install --list | grep '  10.' | tail -1)
+    nodenv install $VERSION
 fi

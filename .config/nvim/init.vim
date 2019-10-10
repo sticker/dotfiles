@@ -31,3 +31,4 @@ endif
 " }}}
 
 set expandtab
+au FileType yaml setlocal tabstop=2 expandtab shiftwidth=2 softtabstop=2
